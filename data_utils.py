@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import pickle
 import numpy as np
 from xml.etree.ElementTree import parse
@@ -100,8 +101,10 @@ class ABSADatesetReader:
 
     @staticmethod
     def __read_data__(fname, tokenizer):
-        fin = open(fname+'.graph', 'rb')
-        idx2gragh = pickle.load(fin)
+        graphfile = re.sub(r'train.xml','sentences_train.raw',fname)
+        graphfile = re.sub(r'test.xml','sentences_test.raw',graphfile)
+        fin = open(graphfile+'.graph', 'rb')
+        idx2graph = pickle.load(fin)
         fin.close()
 
         all_data = []
@@ -126,15 +129,21 @@ class ABSADatesetReader:
             for aspectTerm in aspectTerms:
                 term = aspectTerm.get('term')
                 polarity = aspectTerm.get('polarity')
-                start = aspectTerm.get('from')
-                end = aspectTerm.get('to')
-                aspects.append((int(start),int(end)))
+                try:
+                    d[polarity]
+                except:
+                    continue
+                start = len(text.split(term)[0].split())
+                end = start + len(term.split()) + 1
+                aspects.append((start,end))
                 polarities.append(d[polarity])
-            
+            if len(aspects)==0:
+                continue
             text_indices = tokenizer.text_to_sequence(text)
             dependency_graph = idx2graph[sentence_index]
             sentence_index += 1
-
+            # text = re.sub('\n',' ',text)
+            # ftest.write(text+'\n')
             single_data = {
                 'text_indices': text_indices,
                 'aspect_terms': aspects,
@@ -142,7 +151,7 @@ class ABSADatesetReader:
                 'dependency_graph':dependency_graph,
             }
             all_data.append(single_data)
-
+        print('{} sentences were parsed'.format(sentence_index))
         return all_data
 
     def __init__(self, dataset='twitter', embed_dim=300):

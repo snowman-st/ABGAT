@@ -1,0 +1,73 @@
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+max_test_acc: 0.76786		 max_test_f1: 0.64436
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6

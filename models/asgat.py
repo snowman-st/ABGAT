@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import math
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -137,30 +138,66 @@ class ASGAT3(nn.Module):
         self.ga = GraphAttention(opt.hidden_dim*2,opt.hidden_dim*2,opt.dropout,opt.alpha,opt.nheads)
         self.fc = nn.Linear(2*opt.hidden_dim, opt.polarities_dim)
         self.text_embed_dropout = nn.Dropout(opt.dropout)
-    def mask(self, x, aspect_double_idx):
-        batch_size, seq_len = x.shape[0], x.shape[1]
-        aspect_double_idx = aspect_double_idx.cpu().numpy()
-        mask = [[] for i in range(batch_size)]
-        for i in range(batch_size):
-            for j in range(aspect_double_idx[i,0]):
-                mask[i].append(0)
-            for j in range(aspect_double_idx[i,0], aspect_double_idx[i,1]+1):
-                mask[i].append(1)
-            for j in range(aspect_double_idx[i,1]+1, seq_len):
-                mask[i].append(0)
-        mask = torch.tensor(mask).unsqueeze(2).float().to(self.opt.device)
-        return mask*x
 
-    def forward(self, inputs):
-        text_indices, aspect_indices, left_indices, adj = inputs
+    def forward(self, inputs , targets, criterion):
+        text_indices, aspect_terms, adj = inputs
+        polarity = targets
         text_len = torch.sum(text_indices != 0, dim=-1)
-        aspect_len = torch.sum(aspect_indices != 0, dim=-1)
-        left_len = torch.sum(left_indices != 0, dim=-1)
-        aspect_double_idx = torch.cat([left_len.unsqueeze(1), (left_len+aspect_len-1).unsqueeze(1)], dim=1)
-        text = self.embed(text_indices)
+        text = self.embed(text_indices.to(self.opt.device))
         text_out, (_, _) = self.text_lstm(text, text_len)
-        x = F.elu(self.ga(text_out, adj))
-        x = self.mask(x, aspect_double_idx)
-        x = x.mean(dim=1).squeeze()
-        output = self.fc(x)
-        return output
+        x = F.elu(self.ga(text_out, adj.to(self.opt.device)))
+        batches = x.shape[0]
+        loss = torch.tensor(0.).to(self.opt.device)
+        for i in range(batches):
+            aspects = []
+            for a in aspect_terms[i]:
+                aspects.append(x[i][a[0]:a[1]].mean(dim=0).squeeze())
+
+            predicts = []
+            for a in aspects:
+                predicts.append(self.fc(a))
+            loss_ce = criterion(torch.stack(predicts,dim=0),torch.tensor(polarity[i]).to(self.opt.device))
+            loss_neu = self.__get_loss__(aspects,polarity[i])
+            loss += loss_ce# + self.opt.lamda * loss_neu
+
+        return loss/batches
+
+    def predict(self,inputs):
+        text_indices, aspect_terms, adj = inputs
+        text_len = torch.sum(text_indices != 0, dim=-1)
+        text = self.embed(text_indices.to(self.opt.device))
+        text_out, (_, _) = self.text_lstm(text, text_len)
+        x = F.elu(self.ga(text_out, adj.to(self.opt.device)))
+        batches = x.shape[0]
+        predicts = []
+        for i in range(batches):
+            aspects = []
+            for a in aspect_terms[i]:
+                aspects.append(x[i][a[0]:a[1]].mean(dim=0).squeeze())
+            for a in aspects:
+                predicts.append(torch.argmax(self.fc(a), -1))
+        predicts = torch.tensor(predicts).to(self.opt.device)
+        return predicts
+
+
+    def __get_loss__(self,aspects,polarities):
+        # compute loss_neu for every sentence
+        loss_neu = torch.tensor(0.).to(self.opt.device)
+        count = 0
+        neu_set = []
+        orther_set = []
+        for i in range(len(polarities)):
+            if polarities[i] == 0.:
+                neu_set.append(i)
+            else:
+                orther_set.append(i)
+        for j in neu_set:
+            for k in orther_set:
+                loss_neu += self.__dif__(aspects[j],aspects[k])
+                count += 1
+        return loss_neu/count if count>0 else loss_neu
+
+    def __dif__(self,x,y,norm=True):
+        # compute the difference between aj and ak
+        # print(F.cosine_similarity(x,y,dim=0))
+        return F.cosine_similarity(x,y,dim=0)

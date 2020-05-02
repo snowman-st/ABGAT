@@ -67,16 +67,16 @@ class Instructor:
                 self.model.train()
                 optimizer.zero_grad()
 
-                inputs = [sample_batched[col].to(self.opt.device) for col in self.opt.inputs_cols]
-                targets = sample_batched['polarity'].to(self.opt.device)
+                inputs = [sample_batched[col] for col in self.opt.inputs_cols]
+                targets = sample_batched['polarity']
 
-                outputs = self.model(inputs)
-                loss = criterion(outputs, targets)
+                loss = self.model(inputs,targets,criterion)
+                outputs = self.model.predict(inputs)
                 loss.backward()
                 optimizer.step()
-
+                targets = torch.tensor([i for j in targets for i in j]).to(self.opt.device)
                 if global_step % self.opt.log_step == 0:
-                    n_correct += (torch.argmax(outputs, -1) == targets).sum().item()
+                    n_correct += (outputs == targets).sum().item()
                     n_total += len(outputs)
                     train_acc = n_correct / n_total
 
@@ -107,11 +107,12 @@ class Instructor:
         t_targets_all, t_outputs_all = None, None
         with torch.no_grad():
             for t_batch, t_sample_batched in enumerate(self.test_data_loader):
-                t_inputs = [t_sample_batched[col].to(opt.device) for col in self.opt.inputs_cols]
-                t_targets = t_sample_batched['polarity'].to(opt.device)
-                t_outputs = self.model(t_inputs)
+                t_inputs = [t_sample_batched[col] for col in self.opt.inputs_cols]
+                t_targets = t_sample_batched['polarity']
+                t_targets = torch.tensor([i for j in t_targets for i in j]).to(self.opt.device)
+                t_outputs = self.model.predict(t_inputs)
 
-                n_test_correct += (torch.argmax(t_outputs, -1) == t_targets).sum().item()
+                n_test_correct += (t_outputs == t_targets).sum().item()
                 n_test_total += len(t_outputs)
 
                 if t_targets_all is None:
@@ -122,7 +123,7 @@ class Instructor:
                     t_outputs_all = torch.cat((t_outputs_all, t_outputs), dim=0)
 
         test_acc = n_test_correct / n_test_total
-        f1 = metrics.f1_score(t_targets_all.cpu(), torch.argmax(t_outputs_all, -1).cpu(), labels=[0, 1, 2], average='macro')
+        f1 = metrics.f1_score(t_targets_all.cpu(),t_outputs_all.cpu(), labels=[0, 1, 2], average='macro')
         return test_acc, f1
 
     def run(self, repeats=2):
@@ -158,13 +159,14 @@ class Instructor:
 if __name__ == '__main__':
     # Hyper Parameters
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_name', default='lstm', type=str)
+    parser.add_argument('--model_name', default='asgat3', type=str)
     parser.add_argument('--dataset', default='rest14', type=str, help='twitter, rest14, lap14, rest15, rest16')
     parser.add_argument('--optimizer', default='adam', type=str)
     parser.add_argument('--initializer', default='xavier_uniform_', type=str)
     parser.add_argument('--learning_rate', default=0.001, type=float)
     parser.add_argument('--nheads',default=4,type=int)
     parser.add_argument('--alpha',default=0.2,type=float)
+    parser.add_argument('--lamda',default=0.6,type=float)
     parser.add_argument('--dropout',default=0.6,type=float) 
     parser.add_argument('--l2reg', default=0.00001, type=float)
     parser.add_argument('--num_epoch', default=100, type=int)
@@ -175,7 +177,7 @@ if __name__ == '__main__':
     parser.add_argument('--polarities_dim', default=3, type=int)
     parser.add_argument('--save', default=False, type=bool)
     parser.add_argument('--seed', default=776, type=int)
-    parser.add_argument('--device', default=0, type=int)
+    parser.add_argument('--device', default=2, type=int)
     parser.add_argument('--logfile',default='log/',type=str)
     opt = parser.parse_args()
 
@@ -195,7 +197,7 @@ if __name__ == '__main__':
         'astcn': ['text_indices', 'aspect_indices', 'left_indices', 'dependency_graph'],
         'asgat': ['text_indices', 'aspect_indices', 'left_indices', 'dependency_graph'],
         'asgat2': ['text_indices', 'aspect_indices', 'left_indices', 'dependency_graph'],
-        'asgat3': ['text_indices', 'aspect_indices', 'left_indices', 'dependency_graph'],
+        'asgat3': ['text_indices', 'aspect_terms', 'dependency_graph'],
     }
     initializers = {
         'xavier_uniform_': torch.nn.init.xavier_uniform_,

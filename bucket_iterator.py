@@ -27,6 +27,7 @@ class BucketIterator(object):
     def pad_data(self, batch_data):
         batch_text_indices = []
         batch_aspect_indices = []
+        batch_polarity = []
         batch_dependency_graph = []
         max_len = max([len(t[self.sort_key]) for t in batch_data])
         for item in batch_data:
@@ -43,7 +44,7 @@ class BucketIterator(object):
         return { \
                 'text_indices': torch.tensor(batch_text_indices), \
                 'aspect_terms': batch_aspect_indices,\
-                'polarity': torch.tensor(batch_polarity), \
+                'polarity': batch_polarity, \
                 'dependency_graph': torch.tensor(batch_dependency_graph)
             }
 

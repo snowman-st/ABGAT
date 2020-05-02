@@ -19,6 +19,11 @@ def parse_sentence(pathin,pathout):
     sentences = tree.getroot()
     sentence_count = 0
     f = open(pathout,'a+',encoding='utf-8')
+    d = {
+            'neutral': 0,
+            'positive': 1,
+            'negative': 2
+        }
     for sentence in sentences:
         text = sentence.find('text')
         if text is None:
@@ -27,7 +32,24 @@ def parse_sentence(pathin,pathout):
         aspectTerms = sentence.find('aspectTerms')
         if aspectTerms is None:
             continue
+        aspects = []
+        polarities = []
+        for aspectTerm in aspectTerms:
+            term = aspectTerm.get('term')
+            polarity = aspectTerm.get('polarity')
+            try:
+                d[polarity]
+            except:
+                continue
+            start = len(text.split(term)[0].split())
+            end = start + len(term.split()) + 1
+            aspects.append((start,end))
+            polarities.append(d[polarity])
+        if len(aspects)==0:
+            # print('hhh')过滤仅含有 conflict极性的句子
+            continue
         sentence_count += 1
+        text = re.sub('\n'," ",text)
         f.write(text+'\n')
     f.close()
     print('{} sentences were saved in {}'.format(sentence_count,pathout))

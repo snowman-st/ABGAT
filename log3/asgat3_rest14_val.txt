@@ -1,0 +1,88 @@
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.2
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.2
+max_test_acc: 0.75714		 max_test_f1: 0.65589
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.2
+max_test_acc: 0.77054		 max_test_f1: 0.66297
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.3
+max_test_acc: 0.76786		 max_test_f1: 0.66445
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.3
+max_test_acc: 0.76071		 max_test_f1: 0.66140
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.4
+max_test_acc: 0.76339		 max_test_f1: 0.65928
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.4
+max_test_acc: 0.76339		 max_test_f1: 0.65189
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.5
+max_test_acc: 0.76786		 max_test_f1: 0.65537
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.5
+max_test_acc: 0.76875		 max_test_f1: 0.65459
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+max_test_acc: 0.76786		 max_test_f1: 0.64436
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+max_test_acc: 0.76964		 max_test_f1: 0.65070
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.003	hhead:4	dropout:0.2
+max_test_acc: 0.76161		 max_test_f1: 0.65393
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.003	hhead:4	dropout:0.2
+max_test_acc: 0.76339		 max_test_f1: 0.65936
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.003	hhead:4	dropout:0.1
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.2
+max_test_acc: 0.76607		 max_test_f1: 0.65540
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.2
+max_test_acc: 0.76964		 max_test_f1: 0.67308
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.3
+max_test_acc: 0.76518		 max_test_f1: 0.66247
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.3
+max_test_acc: 0.77232		 max_test_f1: 0.67958
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.4
+max_test_acc: 0.77857		 max_test_f1: 0.66352
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.4
+max_test_acc: 0.77143		 max_test_f1: 0.66033
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.5
+max_test_acc: 0.76786		 max_test_f1: 0.66150
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.5
+max_test_acc: 0.77411		 max_test_f1: 0.65680
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+max_test_acc: 0.76875		 max_test_f1: 0.65586
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.001	hhead:4	dropout:0.6
+max_test_acc: 0.76607		 max_test_f1: 0.65628
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.003	hhead:4	dropout:0.2
+max_test_acc: 0.76964		 max_test_f1: 0.67272
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.003	hhead:4	dropout:0.2
+max_test_acc: 0.76964		 max_test_f1: 0.65802
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.003	hhead:4	dropout:0.1
+max_test_acc: 0.77054		 max_test_f1: 0.66310
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.003	hhead:4	dropout:0.1
+max_test_acc: 0.77589		 max_test_f1: 0.67042
+repeat: 1
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.003	hhead:4	dropout:0.2
+max_test_acc: 0.76964		 max_test_f1: 0.67272
+repeat: 2
+optimizer:<class 'torch.optim.adam.Adam'>	learning_rate:0.003	hhead:4	dropout:0.2
+max_test_acc: 0.76964		 max_test_f1: 0.65802
